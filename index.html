@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Brand &amp; Website Questionnaire — Esperant AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #E3E5EA;
+    --paper: #F0F1F4;
+    --ink: #161A2B;
+    --muted: #5B6174;
+    --line: #C8CCD7;
+    --accent: #2C3E8F;
+    --accent2: #B8871F;
+    --chip-on-bg: #1B1A20;
+    --chip-on-ink: #F2EFF0;
+    --focus: #3A5BD9;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, system-ui, sans-serif;
+    --read: "Literata", Georgia, "Iowan Old Style", serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12141C; --paper: #1A1D27; --ink: #E8EAF0; --muted: #8E94A6; --line: #2B2F3C;
+      --accent: #93A6F0; --accent2: #E0B65A; --chip-on-bg: #EAE7EA; --chip-on-ink: #15141A; --focus: #8AA0F0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12141C; --paper: #1A1D27; --ink: #E8EAF0; --muted: #8E94A6; --line: #2B2F3C;
+    --accent: #93A6F0; --accent2: #E0B65A; --chip-on-bg: #EAE7EA; --chip-on-ink: #15141A; --focus: #8AA0F0;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--read); font-size: 16.5px; line-height: 1.62;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+
+  .progress { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; height: 3px; background: var(--line); }
+  .progress span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s ease; }
+
+  /* Hero. The one bold move: two voices in one waveform — one speaker, then
+     the other answering in their own language, same rhythm. */
+  .hero { padding: 84px 24px 64px; }
+  .hero-inner { max-width: 720px; margin: 0 auto; }
+  .from { font-family: var(--display); font-size: 14px; font-weight: 500; color: var(--muted); margin: 0 0 30px; letter-spacing: .01em; }
+  h1 {
+    font-family: var(--display); font-weight: 600; font-size: clamp(42px, 7.6vw, 72px);
+    line-height: 1.0; letter-spacing: -0.03em; margin: 0 0 32px;
+  }
+  .pause { display: flex; align-items: flex-end; gap: 4px; height: 56px; margin: 0 0 32px; }
+  .pause i {
+    display: block; width: 3px; border-radius: 2px; background: var(--accent);
+    height: var(--h); opacity: .72; transform-origin: bottom;
+    animation: rise .5s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d);
+  }
+  .pause i.quiet { background: var(--accent2); opacity: .9; }
+  @keyframes rise { from { transform: scaleY(0); } to { transform: none; } }
+  .pause-note { font-family: var(--display); font-size: 13.5px; color: var(--muted); margin: -20px 0 32px; }
+  @media (prefers-reduced-motion: reduce) {
+    .pause i { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+  .lead { font-size: 19.5px; line-height: 1.6; max-width: 58ch; margin: 0 0 16px; }
+  .meta { color: var(--muted); font-size: 15.5px; max-width: 58ch; margin: 0; }
+
+  main { max-width: 768px; margin: 0 auto; padding: 0 24px 64px; }
+
+  section.part { padding: 56px 0 8px; border-top: 1px solid var(--line); }
+  .part-head { margin-bottom: 8px; }
+  .part-head h2 { font-family: var(--display); font-weight: 600; font-size: 29px; line-height: 1.15; margin: 0; letter-spacing: -0.02em; }
+  .part-note { color: var(--muted); margin: 0 0 8px; max-width: 58ch; font-size: 15.5px; }
+
+  /* Questions read as turns in a conversation: a number in the gutter, a rule, then the line. */
+  .q { display: grid; grid-template-columns: 34px 1fr; column-gap: 18px; padding: 28px 0; }
+  .q + .q { border-top: 1px dashed var(--line); }
+  .q-num {
+    font-family: var(--display); font-variant-numeric: tabular-nums; font-weight: 500;
+    color: var(--muted); font-size: 14px; padding-top: 7px;
+  }
+  .q-label { font-size: 20.5px; line-height: 1.45; margin: 0 0 6px; display: block; }
+  .q-hint { color: var(--muted); font-size: 14.5px; line-height: 1.55; margin: 0 0 14px; }
+  .q-body { min-width: 0; border-left: 1px solid var(--line); padding-left: 18px; }
+
+  input[type=text], input[type=email], input[type=tel], input[type=url], textarea {
+    width: 100%; font-family: var(--display); font-size: 15.5px; color: var(--ink); background: var(--paper);
+    border: 1px solid var(--line); border-radius: 5px; padding: 12px 14px;
+    transition: border-color .15s;
+  }
+  textarea { min-height: 112px; resize: vertical; line-height: 1.55; }
+  input::placeholder, textarea::placeholder { color: var(--muted); opacity: .75; }
+  input:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-color: transparent; }
+  .stack { display: grid; gap: 10px; }
+  .pair { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; }
+  .numbered { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: center; }
+  .numbered span { font-family: var(--display); color: var(--muted); font-size: 13.5px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chip span {
+    display: inline-block; font-family: var(--display); padding: 8px 15px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--paper); cursor: pointer; font-size: 14.5px; user-select: none;
+    transition: background .12s, color .12s, border-color .12s;
+  }
+  .chip span:hover { border-color: var(--ink); }
+  .chip input:checked + span { background: var(--chip-on-bg); color: var(--chip-on-ink); border-color: var(--chip-on-bg); }
+  .chip input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .other { margin-top: 10px; }
+  .limit-note { font-family: var(--display); font-size: 13.5px; color: var(--muted); margin-top: 8px; min-height: 1em; }
+
+  .matrix { display: grid; gap: 2px; }
+  .m-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .m-row:last-child { border-bottom: 0; }
+  .m-label { font-family: var(--display); font-size: 15px; }
+  .m-row .chips { gap: 6px; flex-wrap: nowrap; }
+  .m-row .chip span { padding: 6px 12px; font-size: 13px; }
+  @media (max-width: 600px) {
+    .m-row { grid-template-columns: 1fr; gap: 6px; }
+    .m-row .chips { flex-wrap: wrap; }
+    .pair { grid-template-columns: 1fr; }
+    .q { grid-template-columns: 1fr; column-gap: 0; }
+    .q-num { padding: 0 0 6px; }
+    .q-body { border-left: 0; padding-left: 0; }
+    .hero { padding: 60px 20px 48px; }
+    main { padding: 0 20px 48px; }
+  }
+
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .contact label { font-family: var(--display); font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+  @media (max-width: 600px) { .contact { grid-template-columns: 1fr; } }
+
+  .send { padding: 48px 0 0; border-top: 1px solid var(--line); margin-top: 32px; }
+  .send h2 { font-family: var(--display); font-weight: 600; font-size: 29px; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 28px; }
+  button {
+    font-family: var(--display); font-size: 15.5px; font-weight: 500; cursor: pointer;
+    border-radius: 999px; padding: 13px 24px;
+    border: 1px solid var(--ink); background: transparent; color: var(--ink);
+  }
+  button.primary { background: var(--ink); color: var(--bg); }
+  button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  button:disabled { opacity: .5; cursor: default; }
+  button.link { border: 0; padding: 13px 4px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  .status { font-family: var(--display); margin-top: 16px; font-size: 15px; min-height: 1.5em; }
+  .status.error { color: #B3412E; }
+  .fallback { display: none; margin-top: 20px; padding: 20px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; }
+  .fallback.show { display: block; }
+  .fallback p { margin: 0 0 14px; }
+  .fallback a { color: var(--ink); }
+  .saved { font-family: var(--display); font-size: 13.5px; color: var(--muted); }
+  footer { max-width: 768px; margin: 0 auto; padding: 24px 24px 56px; color: var(--muted); font-size: 14.5px; }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="from">Holographik for Esperant AI</p>
+    <h1>Brand and website<br>questionnaire</h1>
+    <div class="pause" aria-hidden="true">
+      <i style="--h:14px;--d:0ms"></i><i style="--h:30px;--d:20ms"></i><i style="--h:22px;--d:40ms"></i><i style="--h:46px;--d:60ms"></i><i style="--h:34px;--d:80ms"></i><i style="--h:52px;--d:100ms"></i><i style="--h:28px;--d:120ms"></i><i style="--h:41px;--d:140ms"></i><i style="--h:18px;--d:160ms"></i><i style="--h:36px;--d:180ms"></i><i style="--h:24px;--d:200ms"></i><i style="--h:32px;--d:220ms"></i><i style="--h:20px;--d:240ms"></i><i class="quiet" style="--h:26px;--d:260ms"></i><i class="quiet" style="--h:44px;--d:280ms"></i><i class="quiet" style="--h:30px;--d:300ms"></i><i class="quiet" style="--h:50px;--d:320ms"></i><i class="quiet" style="--h:36px;--d:340ms"></i><i class="quiet" style="--h:22px;--d:360ms"></i><i class="quiet" style="--h:38px;--d:380ms"></i><i class="quiet" style="--h:27px;--d:400ms"></i><i class="quiet" style="--h:49px;--d:420ms"></i><i class="quiet" style="--h:31px;--d:440ms"></i><i class="quiet" style="--h:44px;--d:460ms"></i><i class="quiet" style="--h:19px;--d:480ms"></i><i class="quiet" style="--h:12px;--d:500ms"></i>
+    </div>
+    <p class="pause-note">Two voices, one conversation.</p>
+    <p class="lead">Thanks for the call. Before we propose a scope, we want to understand Esperant as well as we can: where you are heading, who you need to convince in the next year, and what good looks like to you. Markwin and Dariia are welcome to fill it in together.</p>
+    <p class="meta">Most questions take a click. Skip anything you don't know yet — a partial answer today is more useful than a complete one next week. Answers save in this browser as you go, so you can stop and come back. About 25 minutes.</p>
+  </div>
+</header>
+
+<main>
+  <form id="qform" novalidate autocomplete="on"></form>
+
+  <section class="send" aria-labelledby="sendTitle">
+    <h2 id="sendTitle">Your details</h2>
+    <p class="meta">So we know who to follow up with.</p>
+    <div class="contact" style="margin-top:20px">
+      <label>Name<input type="text" form="qform" name="c_name" autocomplete="name"></label>
+      <label>Role<input type="text" form="qform" name="c_role" autocomplete="organization-title"></label>
+      <label>Email<input type="email" form="qform" name="c_email" autocomplete="email"></label>
+      <label>Phone (optional)<input type="tel" form="qform" name="c_phone" autocomplete="tel"></label>
+    </div>
+    <div class="actions">
+      <button type="button" class="primary" id="sendBtn">Send answers</button>
+      <button type="button" id="downloadBtn">Download a copy</button>
+      <button type="button" class="link" id="clearBtn">Clear all answers</button>
+    </div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <p class="saved" id="savedNote">Answers save in this browser.</p>
+    <div class="fallback" id="fallback">
+      <p>Your answers are ready to send. Copy them and email them to <a href="mailto:hello@holographik.co">hello@holographik.co</a>, or download a copy and attach it.</p>
+      <div class="actions" style="margin-top:0">
+        <button type="button" class="primary" id="copyBtn">Copy answers</button>
+        <a id="mailLink" href="mailto:hello@holographik.co">Open email</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>Questions along the way? Write to <a href="mailto:hello@holographik.co">hello@holographik.co</a>.</footer>
+
+<script>
+  // Paste the Google Apps Script /exec URL here when hosting this page yourself
+  // (doPost script lives in the 'Esperant answers' sheet; column A is the question list).
+  // Leave empty and answers are sent by email / download instead.
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwfIsY4BKB0vGDEtv7anpVB64XjSGM4U7S83i3bsR7QnnEslLFDB33GWCF8BZjdpDnX/exec";
+  const STORAGE_KEY = "esperant_discovery_v1";
+
+  const PARTS = [
+    { title: "Esperant", note: "This is the part we care about most. Everything we design grows out of how you see the company, so take your time here even if you skip other parts.", qs: [
+      { id: "q_one_line", type: "text", label: "In one sentence, what is Esperant?", hint: "The version you'd say to an operator in a lift." },
+      { id: "q_mission", type: "textarea", label: "What is Esperant's mission today?" },
+      { id: "q_vision", type: "textarea", label: "And the vision: what does Europe look like if Esperant succeeds?" },
+      { id: "q_names", type: "single", label: "On the call, Esperant was the company and Esperanto the service people switch on during a call. Is that naming final?",
+        options: ["Yes, that's final", "Mostly, details may change", "Still open", "Let's discuss"] },
+      { id: "q_name_check", type: "single", label: "Has the Esperanto name been checked for trademarks?", hint: "Esperanto Technologies used the name in AI before it closed, and its IP now sits with Nekko.ai. We'd like to know before we build the brand around it.",
+        options: ["Yes, it's cleared", "In progress", "Not yet", "Not sure"] },
+      { id: "q_pillars", type: "matrix", label: "You described three layers in your pitch. How much weight should each carry in the brand?",
+        scale: ["Lead message", "Supporting", "In the background"],
+        rows: ["Uniting Europe through language", "Safe and private: live, nothing recorded", "A human voice, your own voice", "First in the world"] },
+      { id: "q_why", type: "textarea", label: "Why Esperant and not AirPods or a translation app? Say it the way you would to a sceptical operator.", hint: "You made the point that one-sided translation doesn't work. We'd like it in your words." },
+      { id: "q_personality", type: "multi", limit: 4, label: "If Esperant were a person, which words would fit?", hint: "Choose up to four.", other: true,
+        options: ["Trustworthy", "Warm", "Visionary", "Diplomatic", "Precise", "Bold", "Calm", "Optimistic", "Approachable", "Pioneering", "Premium", "Playful"] }
+    ]},
+    { title: "The next twelve months", note: "While you pitch operators and raise funding, the brand has to convince a few very specific people. These questions help us design for them first.", qs: [
+      { id: "q_audiences", type: "matrix", label: "Who does the brand have to win over in the next year?",
+        scale: ["Primary", "Secondary", "Not yet"],
+        rows: ["Mobile network operators", "MVNOs and MVNEs", "EU institutions and governments", "Local governments and public bodies", "Investors and private equity", "Press and media", "Businesses using it directly", "Individual users"] },
+      { id: "q_decider", type: "textarea", label: "Who is the person at an operator who says yes, and what do they need to feel before they do?" },
+      { id: "q_investor", type: "textarea", label: "What should an investor understand within the first minute?", hint: "You mentioned the brand is also a tool for the funding round." },
+      { id: "q_markets", type: "text", label: "Which countries and operators are you focusing on first?", hint: "You mentioned three countries in discussion. Share only what you're comfortable with." },
+      { id: "q_launch", type: "single", label: "Is there a launch moment we should design toward?", hint: "You mentioned a press launch in Europe and the first quarter of next year.",
+        options: ["Yes, a fixed date", "Roughly Q1 2027", "Not fixed yet"] },
+      { id: "q_launch_date", type: "text", label: "If there's a date, what is it, and what happens on it?", placeholder: "e.g. press launch, operator announcement" }
+    ]},
+    { title: "Two to five years", note: "We don't want to design an identity you outgrow in a year. Knowing where you're heading tells us how flexible it needs to be from day one.", qs: [
+      { id: "q_future", type: "textarea", label: "Where do you see Esperant in two years? And in five?" },
+      { id: "q_architecture", type: "single", label: "As you reach individual users as well as large companies, how do you see the brand?", hint: "Some companies keep one brand for everyone; others split by audience, like a consumer app next to an enterprise platform.",
+        options: ["One brand for everyone", "One master brand with sub-brands", "Separate brands per audience", "Not decided yet"] },
+      { id: "q_app", type: "single", label: "The Esperant AI app is already live in the App Store. Is it staying?", hint: "It has its own green look, so we want to know whether the new identity should cover it too.",
+        options: ["It stays and gets the new identity", "It's a temporary demo", "It will be replaced", "Not decided"] },
+      { id: "q_app_network", type: "textarea", label: "How do the app and the service built into the network relate to each other?", hint: "On the call the pitch was translation inside a normal phone call, with no app needed." },
+      { id: "q_products", type: "multi", label: "Which products or services will eventually live under the brand?", other: true,
+        options: ["Esperanto call translation", "Voicemail and calls to text", "Contact centre and IVR translation", "Developer platform", "Video translation", "European AI infrastructure"] },
+      { id: "q_public_co", type: "single", label: "You mentioned Esperant aims to become a public company. Should the brand look ready for that from the start?",
+        options: ["Yes, from day one", "Grow into it", "Not relevant yet"] },
+      { id: "q_personance", type: "single", label: "How close should Esperant sit to Personance visually?", hint: "Personance brings the human voice; Esperant brings it to Europe.",
+        options: ["Clearly sister brands", "Subtle shared DNA", "Fully independent", "Not sure yet"] },
+      { id: "q_parent", type: "single", label: "Should the holding or Channel Technologies be visible on the brand?",
+        options: ["Yes, clearly", "Only in the footer or legal text", "No", "Let's discuss"] }
+    ]},
+    { title: "Market and references", note: "Links are worth more to us here than adjectives.", qs: [
+      { id: "q_competitors", type: "pair", n: 4, label: "Who do you see as competitors, direct or indirect?", hint: "Translation apps, devices, other telecom AI. Name and website." },
+      { id: "q_comp_gap", type: "textarea", label: "What do they do well, and where do they fall short?" },
+      { id: "q_benchmarks", type: "list", n: 4, label: "Which companies are a benchmark for where Esperant should be?", hint: "They don't need to be in telecom. Add a line on why.", placeholder: "Link, and why" },
+      { id: "q_brief_refs", type: "text", label: "Your brief lists references like Stripe, Linear, Sanity and x.ai. Which one is closest to what you want?" },
+      { id: "q_europe", type: "single", label: "Should the brand feel visibly European?", hint: "On the call we touched on drawing from Europe itself, its colours, flags and diversity, while still feeling corporate.",
+        options: ["Yes, clearly European", "A subtle nod", "Corporate first, Europe only in the message", "Let's explore both"] },
+      { id: "q_look", type: "multi", limit: 4, label: "Which words describe how Esperant should look?", hint: "Choose up to four.", other: true,
+        options: ["Established", "Corporate", "Human", "Warm", "Minimal", "Cinematic", "Bold", "Calm", "Technical", "Editorial", "Optimistic", "Premium"] },
+      { id: "q_light_dark", type: "single", label: "Light or dark?",
+        options: ["Light", "Dark", "Both", "No preference"] },
+      { id: "q_draft", type: "textarea", label: "Your homepage concept and the current app look quite different. What would you keep from each, and what isn't right yet?" },
+      { id: "q_avoid", type: "textarea", label: "Anything you want to avoid?", hint: "Colours, typefaces, the usual AI startup look, or anything that feels like an EU institution." }
+    ]},
+    { title: "What you need", note: "On the call we agreed the identity comes first and everything else is built from it. This helps us decide what fits the first budget and what follows.", qs: [
+      { id: "q_deliverables", type: "matrix", label: "How soon do you need each of these?",
+        scale: ["Needed first", "Later", "Not needed"],
+        rows: ["Logo and identity system", "Website or landing page", "Pitch deck and presentation templates", "Short launch video", "Social media templates", "Press kit", "Email signature and documents"] },
+      { id: "q_top3", type: "list", n: 3, label: "If the first budget only covers three things, which three?" },
+      { id: "q_pages", type: "multi", label: "Which pages does the first website need?", other: true,
+        options: ["Homepage", "For operators", "Technology", "Impact and Europe", "About", "Press", "Demo or sign-up", "Contact"] },
+      { id: "q_demo_site", type: "single", label: "Should visitors be able to try the demo from the website?", hint: "You mentioned a demo download behind a login, so you can see who is using it.",
+        options: ["Yes, open download", "Yes, behind a login or request form", "Not at launch"] },
+      { id: "q_demo_us", type: "text", label: "When can we try the demo ourselves?" },
+      { id: "q_video", type: "textarea", label: "Any first thoughts on the launch video?", hint: "We'll shape the idea together during the project. Anything you've imagined or seen helps." }
+    ]},
+    { title: "Content", note: "Content is usually what slows a website down, so we'd like to plan it now rather than wait for it later.", qs: [
+      { id: "q_copy_who", type: "single", label: "Who writes the website copy?",
+        options: ["It's ready", "You write it, we shape it", "We need help writing it", "Let's decide together"] },
+      { id: "q_copy_when", type: "text", label: "When could the copy be ready?", placeholder: "e.g. end of November" },
+      { id: "q_deck", type: "single", label: "Do you already use a pitch deck you can send us?", hint: "Even a rough one shows us how you tell the story.",
+        options: ["Yes, we'll send it", "Yes, but it's outdated", "No, we need one"] },
+      { id: "q_assets", type: "multi", label: "What else exists that you can share?", other: true,
+        options: ["Investor one-pager", "Product screenshots or recordings", "Technical documentation", "Photography", "Logo, fonts or colours", "Press release draft"] },
+      { id: "q_assets_where", type: "text", label: "Where will you share them?", placeholder: "A Drive or Figma link works best" },
+      { id: "q_public", type: "textarea", label: "What can and can't be said publicly?", hint: "Operator names, countries in negotiation, the launch languages, anything under NDA." },
+      { id: "q_site_langs", type: "single", label: "Which languages should the website launch in?",
+        options: ["English only", "English and a few others", "All launch languages", "Not decided"] }
+    ]},
+    { title: "Working together", qs: [
+      { id: "q_approver", type: "text", label: "Who signs off on design decisions?" },
+      { id: "q_turnaround", type: "single", label: "How quickly can you get feedback back to us?",
+        options: ["Same day", "One or two days", "Within a week"] },
+      { id: "q_fail", type: "textarea", label: "What would make you look at the result and feel it had failed?" },
+      { id: "q_else", type: "textarea", label: "Anything else we should know before we start?" }
+    ]}
+  ];
+
+  const RATINGS = ["Essential", "Important", "Nice to have"];
+  const form = document.getElementById("qform");
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const key = s => s.replace(/[^a-z0-9]+/gi, "_");
+
+  // ---- Render ----
+  let qn = 0;
+  PARTS.forEach((part, pi) => {
+    const sec = document.createElement("section");
+    sec.className = "part";
+    let html = `<div class="part-head"><h2>${esc(part.title)}</h2></div>`;
+    if (part.note) html += `<p class="part-note">${esc(part.note)}</p>`;
+    part.qs.forEach(q => {
+      qn++; q.n_ = qn;
+      const lid = "l_" + q.id;
+      html += `<div class="q" data-q="${q.id}" role="group" aria-labelledby="${lid}"><span class="q-num">${qn}</span><div class="q-body">`;
+      html += `<label class="q-label" id="${lid}" ${["text", "textarea"].includes(q.type) ? `for="${q.id}"` : ""}>${esc(q.label)}</label>`;
+      if (q.hint) html += `<p class="q-hint">${esc(q.hint)}</p>`;
+      const ph = q.placeholder ? ` placeholder="${esc(q.placeholder)}"` : "";
+      if (q.type === "text") html += `<input type="text" id="${q.id}" name="${q.id}"${ph}>`;
+      if (q.type === "textarea") html += `<textarea id="${q.id}" name="${q.id}"${ph}></textarea>`;
+      if (q.type === "multi" || q.type === "single") {
+        const t = q.type === "multi" ? "checkbox" : "radio";
+        html += `<div class="chips" ${q.limit ? `data-limit="${q.limit}"` : ""}>` +
+          q.options.map(o => `<label class="chip"><input type="${t}" name="${q.id}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("") + `</div>`;
+        if (q.limit) html += `<div class="limit-note" aria-live="polite"></div>`;
+        if (q.other) html += `<input class="other" type="text" name="${q.id}_other" placeholder="${esc(q.otherLabel || "Other")}" aria-label="${esc(q.label)}: ${esc(q.otherLabel || "other")}">`;
+      }
+      if (q.type === "list") {
+        html += `<div class="stack">` + Array.from({ length: q.n }, (_, i) =>
+          `<div class="numbered"><span>${i + 1}</span><input type="text" name="${q.id}_${i + 1}"${ph} aria-label="${esc(q.label)} ${i + 1}"></div>`).join("") + `</div>`;
+      }
+      if (q.type === "pair") {
+        html += `<div class="stack">` + Array.from({ length: q.n }, (_, i) =>
+          `<div class="pair"><input type="text" name="${q.id}_name_${i + 1}" placeholder="Competitor ${i + 1}" aria-label="Competitor ${i + 1} name"><input type="text" name="${q.id}_link_${i + 1}" placeholder="Website" aria-label="Competitor ${i + 1} website"></div>`).join("") + `</div>`;
+      }
+      if (q.type === "matrix") {
+        html += `<div class="matrix">` + q.rows.map(r => {
+          const n = `${q.id}_${key(r)}`;
+          return `<div class="m-row" role="radiogroup" aria-label="${esc(r)}"><span class="m-label">${esc(r)}</span><div class="chips">` +
+            (q.scale || RATINGS).map(v => `<label class="chip"><input type="radio" name="${n}" value="${esc(v)}"><span>${esc(v)}</span></label>`).join("") + `</div></div>`;
+        }).join("") + `</div>`;
+      }
+      html += `</div></div>`;
+    });
+    sec.innerHTML = html;
+    form.appendChild(sec);
+  });
+
+  // Choice limits; a second click on a selected radio clears it
+  form.addEventListener("change", e => {
+    const inp = e.target;
+    if (inp.type !== "checkbox") return;
+    const group = inp.closest("[data-limit]");
+    if (!group) return;
+    const limit = +group.dataset.limit;
+    const note = group.nextElementSibling;
+    if (inp.checked && group.querySelectorAll("input:checked").length > limit) {
+      inp.checked = false;
+      if (note) note.textContent = `You can choose up to ${limit}. Unselect one to pick another.`;
+    } else if (note) note.textContent = "";
+  });
+  form.addEventListener("click", e => {
+    const inp = e.target.closest(".chip")?.querySelector("input[type=radio]");
+    if (!inp || e.target.tagName !== "SPAN") return;
+    if (inp.checked) { e.preventDefault(); inp.checked = false; inp.dispatchEvent(new Event("input", { bubbles: true })); }
+  });
+
+  // ---- Values ----
+  const val = n => (form.elements[n]?.value || "").trim();
+  const checked = n => [...form.querySelectorAll(`input[name="${n}"]:checked`)].map(e => e.value);
+
+  function answerFor(q) {
+    if (q.type === "text" || q.type === "textarea") return val(q.id);
+    if (q.type === "multi" || q.type === "single") {
+      const arr = checked(q.id); const o = val(q.id + "_other"); if (o) arr.push(o); return arr.join(", ");
+    }
+    if (q.type === "list") return Array.from({ length: q.n }, (_, i) => val(`${q.id}_${i + 1}`)).filter(Boolean).join("\n");
+    if (q.type === "pair") return Array.from({ length: q.n }, (_, i) => {
+      const a = val(`${q.id}_name_${i + 1}`), b = val(`${q.id}_link_${i + 1}`); return [a, b].filter(Boolean).join(" — ");
+    }).filter(Boolean).join("\n");
+    if (q.type === "matrix") return q.rows.map(r => { const v = checked(`${q.id}_${key(r)}`)[0]; return v ? `${r}: ${v}` : null; }).filter(Boolean).join("\n");
+    return "";
+  }
+  const allQs = PARTS.flatMap(p => p.qs);
+
+  function buildColumns(submittedAt) {
+    return [
+      ["Submitted", submittedAt], ["Name", val("c_name")], ["Role", val("c_role")],
+      ["Email", val("c_email")], ["Phone", val("c_phone")],
+      ...allQs.map(q => [`${q.n_}. ${q.label}`, answerFor(q)])
+    ].map(([h, v]) => ({ h, v }));
+  }
+  function asText() {
+    let out = `Esperant AI — Brand and website questionnaire\nFilled out by: ${val("c_name")}${val("c_role") ? ", " + val("c_role") : ""}\n${val("c_email")}  ${val("c_phone")}\n`;
+    PARTS.forEach((p, i) => {
+      out += `\n\n${i + 1}. ${p.title.toUpperCase()}\n`;
+      p.qs.forEach(q => { out += `\n${q.n_}. ${q.label}\n${answerFor(q) || "—"}\n`; });
+    });
+    return out;
+  }
+
+  // ---- Progress ----
+  function updateProgress() {
+    const done = allQs.filter(q => answerFor(q)).length;
+    document.getElementById("progressFill").style.width = Math.round(done / allQs.length * 100) + "%";
+    return done;
+  }
+
+  // ---- Autosave (browser storage) ----
+  function snapshot() {
+    const data = {};
+    for (const [k, v] of new FormData(form).entries()) {
+      if (k in data) { if (!Array.isArray(data[k])) data[k] = [data[k]]; data[k].push(v); } else data[k] = v;
+    }
+    return data;
+  }
+  let savedTimer;
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot())); } catch (e) { return; }
+    const note = document.getElementById("savedNote");
+    if (!note) return;
+    note.textContent = "Saved";
+    clearTimeout(savedTimer);
+    savedTimer = setTimeout(() => { note.textContent = "Answers save in this browser."; }, 1200);
+  }
+  function load() {
+    let data = null;
+    try { data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (e) { data = null; }
+    if (data) Object.entries(data).forEach(([k, v]) => {
+      const vals = Array.isArray(v) ? v : [v];
+      document.querySelectorAll(`[name="${CSS.escape(k)}"]`).forEach(el => {
+        if (el.type === "checkbox" || el.type === "radio") el.checked = vals.includes(el.value);
+        else el.value = vals[0];
+      });
+    });
+    updateProgress();
+  }
+  form.addEventListener("input", () => { save(); updateProgress(); });
+  form.addEventListener("change", () => { save(); updateProgress(); });
+
+  // ---- Sending ----
+  const status = document.getElementById("status");
+  const setStatus = (msg, err) => { status.textContent = msg; status.classList.toggle("error", !!err); };
+  const downloadsP = (window.claude && typeof window.claude.use === "function")
+    ? window.claude.use("downloads").catch(() => null) : Promise.resolve(null);
+
+  function showFallback() {
+    const fb = document.getElementById("fallback");
+    const body = asText();
+    const mail = document.getElementById("mailLink");
+    const subject = encodeURIComponent("Esperant AI — brand and website questionnaire");
+    mail.href = body.length < 1800
+      ? `mailto:hello@holographik.co?subject=${subject}&body=${encodeURIComponent(body)}`
+      : `mailto:hello@holographik.co?subject=${subject}&body=${encodeURIComponent("Our answers are pasted below.\n\n")}`;
+    fb.classList.add("show");
+  }
+
+  document.getElementById("sendBtn").addEventListener("click", async () => {
+    if (!val("c_name") || !val("c_email")) {
+      setStatus("Add your name and email above so we know who to reply to.", true);
+      form.elements["c_name"].focus(); return;
+    }
+    if (updateProgress() === 0) { setStatus("The questionnaire is still empty. Answer a few questions first.", true); return; }
+    const btn = document.getElementById("sendBtn");
+    if (SHEET_WEBHOOK_URL) {
+      btn.disabled = true; setStatus("Sending…");
+      try {
+        const submittedAt = new Date().toISOString();
+        await fetch(SHEET_WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ columns: buildColumns(submittedAt), submittedAt }) });
+        setStatus("Sent. Thank you, we've received your answers and will be in touch.");
+        btn.textContent = "Sent";
+        return;
+      } catch (e) {
+        btn.disabled = false;
+      }
+    }
+    setStatus("");
+    showFallback();
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    const text = asText();
+    try { await navigator.clipboard.writeText(text); setStatus("Answers copied. Paste them into an email to hello@holographik.co."); }
+    catch (e) {
+      const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+      let ok = false; try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+      ta.remove();
+      setStatus(ok ? "Answers copied. Paste them into an email to hello@holographik.co." : "Copying isn't allowed here. Use Download a copy instead.", !ok);
+    }
+  });
+
+  document.getElementById("downloadBtn").addEventListener("click", async () => {
+    const text = asText();
+    const filename = "Esperant-questionnaire.txt";
+    const downloads = await downloadsP;
+    if (downloads) {
+      try { await downloads.save({ filename, data: text }); setStatus("Copy saved."); }
+      catch (e) { if (e && e.code !== "declined") setStatus("The download didn't go through. Try Copy answers instead.", true); }
+      return;
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
+    a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    if (!confirm("Clear all answers? This can't be undone.")) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    form.reset(); updateProgress(); setStatus("All answers cleared.");
+  });
+
+  load();
+</script>
+</body>
+</html>
